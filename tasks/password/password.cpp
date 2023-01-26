@@ -1,8 +1,10 @@
 #include "password.h"
-const int MIN_LEN = 8;
-const int MAX_LEN = 14;
-const int MIN_ASCII = 33;
-const int MAX_ASCII = 126;
+
+const size_t MIN_LEN = 8;
+const size_t MAX_LEN = 14;
+const char MIN_ASCII = 33;
+const char MAX_ASCII = 126;
+
 bool ValidatePassword(const std::string& password) {
     bool big_let = false;
     bool small_let = false;
@@ -18,20 +20,18 @@ bool ValidatePassword(const std::string& password) {
         }
         if (islower(elem)) {
             small_let = true;
-        } else {
-            if (isupper(elem)) {
-                big_let = true;
-            } else {
-                if (isdigit(elem)) {
-                    num = true;
-                } else {
-                    symb = true;
-                }
-            }
+            continue;
         }
+        if (isupper(elem)) {
+            big_let = true;
+            continue;
+        }
+
+        if (isdigit(elem)) {
+            num = true;
+            continue;
+        }
+        symb = true;
     }
-    if (big_let + small_let + num + symb < 3) {
-        return false;
-    }
-    return true;
+    return big_let + small_let + num + symb >= 3;
 }
