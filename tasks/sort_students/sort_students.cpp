@@ -1,5 +1,7 @@
 #include "sort_students.h"
 
+#include <tuple>
+
 bool DateComp(const Student& lhv, const Student& rhv) {
     return std::tie(lhv.birth_date.year, lhv.birth_date.month, lhv.birth_date.day, lhv.last_name, lhv.name) <
            std::tie(rhv.birth_date.year, rhv.birth_date.month, rhv.birth_date.day, rhv.last_name, rhv.name);
