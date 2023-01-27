@@ -1,18 +1,18 @@
 #include "sort_students.h"
 
-bool Date_comp(const Student& lhv, const Student& rhv) {
+bool DateComp(const Student& lhv, const Student& rhv) {
     return std::tie(lhv.birth_date.year, lhv.birth_date.month, lhv.birth_date.day, lhv.last_name, lhv.name) <
            std::tie(rhv.birth_date.year, rhv.birth_date.month, rhv.birth_date.day, rhv.last_name, rhv.name);
 }
-bool Name_comp(const Student& lhv, const Student& rhv) {
+bool NameComp(const Student& lhv, const Student& rhv) {
     return std::tie(lhv.last_name, lhv.name, lhv.birth_date.year, lhv.birth_date.month, lhv.birth_date.day) <
            std::tie(rhv.last_name, rhv.name, rhv.birth_date.year, rhv.birth_date.month, rhv.birth_date.day);
 }
 
 void SortStudents(std::vector<Student>& students, SortKind sortKind) {
     if (sortKind == SortKind::Date) {
-        std::sort(students.begin(), students.end(), Date_comp);
+        std::sort(students.begin(), students.end(), DateComp);
     } else {
-        std::sort(students.begin(), students.end(), Name_comp);
+        std::sort(students.begin(), students.end(), NameComp);
     }
 }
