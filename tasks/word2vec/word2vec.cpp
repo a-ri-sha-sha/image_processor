@@ -8,8 +8,8 @@ std::vector<std::string> FindClosestWords(const std::vector<std::string>& words,
     int64_t max_len = 0;
     int64_t len = 0;
     for (size_t i = 1; i < vectors.size(); ++i) {
-        for (int coord : vectors[i]) {
-            len += static_cast<int64_t>(coord) * static_cast<int64_t>(vectors[0][i]);
+        for (size_t j = 0; j < vectors[i].size(); ++j) {
+            len += static_cast<int64_t>(vectors[i][j]) * static_cast<int64_t>(vectors[0][i]);
         }
         if (len == max_len) {
             ans.push_back(words[i]);
