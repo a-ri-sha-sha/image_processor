@@ -9,15 +9,15 @@ std::vector<std::string> FindClosestWords(const std::vector<std::string>& words,
     size_t len = 0;
     for (int i = 1; i < vectors.size(); ++i) {
         for (int coord : vectors[i]) {
-            len += coord * vectors[i][0];
+            len += coord * vectors[0][i];
         }
         if (len == max_len) {
-            ans.push_back(words[i - 1]);
+            ans.push_back(words[i]);
         }
         if (len > max_len) {
             max_len = len;
             ans.clear();
-            ans.push_back(words[i - 1]);
+            ans.push_back(words[i]);
         }
         len = 0;
     }
