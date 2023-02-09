@@ -26,6 +26,9 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
         if (ev->event_type == EventType::MergeRequestOpen) {
             std::get<1>(table[ev->student_name][ev->task_name]) = true;
         }
+        if (ev->event_type == EventType::MergeRequestClosed) {
+            std::get<1>(table[ev->student_name][ev->task_name]) = false;
+        }
     }
     for (const StudentName& stu : students) {
         for (const TaskName& task_name : task) {
