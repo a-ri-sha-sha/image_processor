@@ -27,10 +27,10 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
             std::get<1>(table[ev->student_name][ev->task_name]) = true;
         }
     }
-    for (StudentName stu : students) {
-        for (TaskName taskName : task) {
-            if (std::get<0>(table[stu][taskName]) and !(std::get<1>(table[stu][taskName]))) {
-                ans[stu].insert(taskName);
+    for (const StudentName& stu : students) {
+        for (const TaskName& task_name : task) {
+            if (std::get<0>(table[stu][task_name]) and !(std::get<1>(table[stu][task_name]))) {
+                ans[stu].insert(task_name);
             }
         }
     }
