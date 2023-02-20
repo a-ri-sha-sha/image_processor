@@ -4,6 +4,7 @@
 bool Comp(const Event* lhv, const Event* rhv) {
     return lhv->time < rhv->time;
 }
+
 using Table = std::map<StudentName, std::map<TaskName, std::pair<bool, bool>>>;
 
 ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
@@ -41,5 +42,6 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
             }
         }
     }
+
     return ans;
 }
