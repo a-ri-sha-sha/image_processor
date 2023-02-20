@@ -9,6 +9,7 @@ using StudentName = std::string;
 using TaskName = std::string;
 
 using ScoreTable = std::map<StudentName, std::set<TaskName>>;
+using Table = std::map<StudentName, std::map<TaskName, std::pair<bool, bool>>>;
 
 class Scorer {
 public:
@@ -19,4 +20,9 @@ public:
     void Reset();
 
     ScoreTable GetScoreTable() const;
+
+private:
+    Table table;
+    std::set<StudentName> students;
+    std::set<TaskName> task;
 };
