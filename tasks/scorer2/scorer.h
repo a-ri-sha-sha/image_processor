@@ -22,7 +22,7 @@ public:
     ScoreTable GetScoreTable() const;
 
 private:
-    Table table;
-    std::set<StudentName> students;
-    std::set<TaskName> task;
+    Table table_;
+    std::set<StudentName> students_;
+    std::set<TaskName> task_;
 };
