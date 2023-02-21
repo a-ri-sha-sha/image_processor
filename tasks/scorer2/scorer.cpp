@@ -1,22 +1,22 @@
 #include "scorer.h"
 
 void Scorer::OnCheckFailed(const StudentName& student_name, const TaskName& task_name) {
-    std::get<0>(table_[student_name][task_name]) = false;
+    table_[student_name][task_name].first = false;
     students_.insert(student_name);
     task_.insert(task_name);
 }
 void Scorer::OnCheckSuccess(const StudentName& student_name, const TaskName& task_name) {
-    std::get<0>(table_[student_name][task_name]) = true;
+    table_[student_name][task_name].first = true;
     students_.insert(student_name);
     task_.insert(task_name);
 }
 void Scorer::OnMergeRequestOpen(const StudentName& student_name, const TaskName& task_name) {
-    std::get<1>(table_[student_name][task_name]) = true;
+    table_[student_name][task_name].second = true;
     students_.insert(student_name);
     task_.insert(task_name);
 }
 void Scorer::OnMergeRequestClosed(const StudentName& student_name, const TaskName& task_name) {
-    std::get<1>(table_[student_name][task_name]) = false;
+    table_[student_name][task_name].second = false;
     students_.insert(student_name);
     task_.insert(task_name);
 }
