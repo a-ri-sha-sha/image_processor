@@ -1,6 +1,6 @@
 #include "unixpath.h"
 
-void Split(const std::string_view& dir, std::deque<std::string>& dir_deq) {
+void Split(const std::string_view dir, std::deque<std::string>& dir_deq) {
     std::string add;
     for (size_t i = 0; i < dir.size(); ++i) {
         char elem = dir[i];
