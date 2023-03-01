@@ -184,36 +184,10 @@ Minesweeper::RenderedField Minesweeper::RenderField() const {
                 field[y] += "*";
             } else if (open_cell_[y][x] == OpenCellType::Flag) {
                 field[y] += "?";
+            } else if (neighbour_[y][x] == 0) {
+                field[y] += ".";
             } else {
-                switch (neighbour_[y][x]) {
-                    case 0:
-                        field[y] += ".";
-                        break;
-                    case 1:
-                        field[y] += "1";
-                        break;
-                    case 2:
-                        field[y] += "2";
-                        break;
-                    case 3:
-                        field[y] += "3";
-                        break;
-                    case 4:
-                        field[y] += "4";
-                        break;
-                    case 5:
-                        field[y] += "5";
-                        break;
-                    case 6:
-                        field[y] += "6";
-                        break;
-                    case 7:
-                        field[y] += "7";
-                        break;
-                    case 8:
-                        field[y] += "8";
-                        break;
-                }
+                field[y] += std::to_string(neighbour_[y][x]);
             }
         }
     }
