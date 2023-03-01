@@ -38,6 +38,7 @@ public:
 
     void NearbyMine(size_t x, size_t y);
 
+    void StartNewGame(size_t width, size_t height);
     void NewGame(size_t width, size_t height, size_t mines_count);
     void NewGame(size_t width, size_t height, const std::vector<Cell>& cells_with_mines);
 

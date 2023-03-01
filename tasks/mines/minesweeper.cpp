@@ -98,13 +98,11 @@ Minesweeper::Minesweeper(size_t width, size_t height, const std::vector<Cell>& c
     NewGame(width, height, cells_with_mines);
 }
 
-void Minesweeper::NewGame(size_t width, size_t height, size_t mines_count) {
+void Minesweeper::StartNewGame(size_t width, size_t height) {
     closed_cell_.clear();
     open_cell_.clear();
     neighbour_.clear();
     count_of_open_ = 0;
-    count_of_mines_ = static_cast<int>(mines_count);
-    std::vector<std::pair<size_t, size_t>> random_cells;
     for (size_t i = 0; i < height; ++i) {
         closed_cell_.push_back(std::vector<ClosedCellType>());
         open_cell_.push_back(std::vector<OpenCellType>());
@@ -113,6 +111,18 @@ void Minesweeper::NewGame(size_t width, size_t height, size_t mines_count) {
             closed_cell_[i].push_back(ClosedCellType::Empty);
             open_cell_[i].push_back(OpenCellType::Closed);
             neighbour_[i].push_back(0);
+        }
+    }
+    start_time_ = std::time(nullptr);
+    game_status_ = GameStatus::IN_PROGRESS;
+}
+
+void Minesweeper::NewGame(size_t width, size_t height, size_t mines_count) {
+    count_of_mines_ = static_cast<int>(mines_count);
+    StartNewGame(width, height);
+    std::vector<std::pair<size_t, size_t>> random_cells;
+    for (size_t i = 0; i < height; ++i) {
+        for (size_t j = 0; j < width; ++j) {
             random_cells.push_back(std::make_pair(i, j));
         }
     }
@@ -123,34 +133,17 @@ void Minesweeper::NewGame(size_t width, size_t height, size_t mines_count) {
         closed_cell_[y][x] = ClosedCellType::Mine;
         NearbyMine(x, y);
     }
-    start_time_ = std::time(nullptr);
-    game_status_ = GameStatus::IN_PROGRESS;
 }
 
 void Minesweeper::NewGame(size_t width, size_t height, const std::vector<Cell>& cells_with_mines) {
-    closed_cell_.clear();
-    open_cell_.clear();
-    neighbour_.clear();
     count_of_mines_ = static_cast<int>(cells_with_mines.size());
-    count_of_open_ = 0;
-    for (size_t i = 0; i < height; ++i) {
-        closed_cell_.push_back(std::vector<ClosedCellType>());
-        open_cell_.push_back(std::vector<OpenCellType>());
-        neighbour_.push_back(std::vector<int>());
-        for (size_t j = 0; j < width; ++j) {
-            closed_cell_[i].push_back(ClosedCellType::Empty);
-            open_cell_[i].push_back(OpenCellType::Closed);
-            neighbour_[i].push_back(0);
-        }
-    }
+    StartNewGame(width, height);
     for (size_t i = 0; i < cells_with_mines.size(); ++i) {
         size_t x = cells_with_mines[i].x;
         size_t y = cells_with_mines[i].y;
         closed_cell_[y][x] = ClosedCellType::Mine;
         NearbyMine(x, y);
     }
-    start_time_ = std::time(nullptr);
-    game_status_ = GameStatus::IN_PROGRESS;
 }
 
 void Minesweeper::MarkCell(const Minesweeper::Cell& cell) {
