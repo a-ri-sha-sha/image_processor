@@ -104,48 +104,26 @@ Poly Poly::operator*(Poly poly) const {
 }
 
 std::ostream& operator<<(std::ostream& out, const Poly& poly) {
-    std::string ans = "y = ";
+    out << "y = ";
     if (poly.coef_.empty()) {
-        return out << ans + "0";
+        return out << 0;
     }
-    bool f = false;
     for (auto it = poly.coef_.rbegin(); it != poly.coef_.rend(); ++it) {
         size_t i = it->first;
-        if (i == 0) {
-            if (poly.coef_.at(i) > 0 && f) {
-                ans += " + " + std::to_string(poly.coef_.at(i));
-            } else if (poly.coef_.at(i) > 0) {
-                ans += std::to_string(poly.coef_.at(i));
-            } else if (poly.coef_.at(i) < 0 && f) {
-                ans += " - " + std::to_string(-poly.coef_.at(i));
-            } else if (poly.coef_.at(i) < 0) {
-                ans += std::to_string(poly.coef_.at(i));
-            }
-        } else if (i == 1) {
-            if (poly.coef_.at(i) > 0 && f) {
-                ans += " + " + std::to_string(poly.coef_.at(i)) + "x";
-            } else if (poly.coef_.at(i) > 0) {
-                ans += std::to_string(poly.coef_.at(i)) + "x";
-                f = true;
-            } else if (poly.coef_.at(i) < 0 && f) {
-                ans += " - " + std::to_string(-poly.coef_.at(i)) + "x";
-            } else if (poly.coef_.at(i) < 0) {
-                ans += std::to_string(poly.coef_.at(i)) + "x";
-                f = true;
-            }
+        if (it == poly.coef_.rbegin()) {
+            out << poly.coef_.at(i);
         } else {
-            if (poly.coef_.at(i) > 0 && f) {
-                ans += " + " + std::to_string(poly.coef_.at(i)) + "x^" + std::to_string(i);
-            } else if (poly.coef_.at(i) > 0) {
-                ans += std::to_string(poly.coef_.at(i)) + "x^" + std::to_string(i);
-                f = true;
-            } else if (poly.coef_.at(i) < 0 && f) {
-                ans += " - " + std::to_string(-poly.coef_.at(i)) + "x^" + std::to_string(i);
-            } else if (poly.coef_.at(i) < 0) {
-                ans += std::to_string(poly.coef_.at(i)) + "x^" + std::to_string(i);
-                f = true;
+            if (poly.coef_.at(i) > 0) {
+                out << " + " << poly.coef_.at(i);
+            } else {
+                out << " - " << -poly.coef_.at(i);
             }
         }
+        if (i == 1) {
+            out << "x";
+        } else if (i != 0) {
+            out << "x^" << i;
+        }
     }
-    return out << ans;
+    return out;
 }
