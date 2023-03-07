@@ -75,6 +75,18 @@ void Poly::operator-=(Poly poly) {
     }
 }
 
+void Poly::operator*=(Poly poly) {
+    Poly ans;
+    for (auto pair_poly : poly.coef_) {
+        for (auto pair : coef_) {
+            if (pair_poly.second != 0 && pair.second != 0) {
+                ans.coef_[pair_poly.first + pair.first] = pair.second * pair_poly.second;
+            }
+        }
+    }
+    coef_ = ans.coef_;
+}
+
 Poly Poly::operator-() const {
     Poly ans;
     for (auto pair : coef_) {

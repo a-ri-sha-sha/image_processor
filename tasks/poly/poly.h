@@ -17,6 +17,7 @@ public:
     Poly operator+(Poly poly) const;
     void operator+=(Poly poly);
     void operator-=(Poly poly);
+    void operator*=(Poly poly);
     Poly operator*(Poly poly) const;
     Poly operator-() const;
 
