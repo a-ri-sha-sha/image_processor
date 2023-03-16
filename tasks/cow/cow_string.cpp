@@ -105,6 +105,14 @@ CowString::CowString(CowString &&str) {
     my_string_ = str.my_string_;
     str.my_string_ = nullptr;
 }
+
+CowString::~CowString() {
+    if (my_string_->GetCount() == 1) {
+        delete my_string_;
+    } else {
+        my_string_->AddCount(-1);
+    }
+}
 char *CowString::GetData() const {
     return my_string_->GetData();
 }

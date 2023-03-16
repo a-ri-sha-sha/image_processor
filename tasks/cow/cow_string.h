@@ -63,6 +63,7 @@ public:
     explicit CowString(std::string str);
     CowString(const CowString& str);
     CowString(CowString&& str);
+    ~CowString();
 
 public:
     char* GetData() const;
