@@ -10,6 +10,7 @@ class Crop : public Filter {
 public:
     Crop(uint32_t height, uint32_t width);
     bool Apply(Bitmap* bitmap) override;
+    ~Crop() override{};
 
 protected:
     uint32_t height_;

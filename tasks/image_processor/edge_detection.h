@@ -12,6 +12,7 @@ public:
     explicit EdgeDetection(double threshold);
     const TMatrix<double>& GetMatrix() override;
     bool Apply(Bitmap* bitmap) override;
+    ~EdgeDetection() override{};
 
 protected:
     TMatrix<double> matrix_;

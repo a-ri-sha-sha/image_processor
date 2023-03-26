@@ -10,5 +10,6 @@
 class Negative : public Filter {
 public:
     bool Apply(Bitmap* bitmap) override;
+    ~Negative() override{};
 };
 #endif  // CPP_HSE_NEGATIVE_H

@@ -13,7 +13,8 @@ class Pipeline {
 public:
     void Apply(Bitmap& bmp);
     void AddFilter(Filter* filter);
-    virtual ~Pipeline(){};
+    ~Pipeline();
+    ;
 
 protected:
     std::vector<Filter*> pipeline_;

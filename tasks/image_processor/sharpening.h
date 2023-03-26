@@ -12,6 +12,7 @@ public:
     Sharpening();
     const TMatrix<double>& GetMatrix() override;
     bool Apply(Bitmap* bitmap) override;
+    ~Sharpening() override{};
 
 protected:
     TMatrix<double> matrix_;

@@ -11,3 +11,8 @@ void Pipeline::Apply(Bitmap& bmp) {
         filter->Apply(&bmp);
     }
 }
+Pipeline::~Pipeline() {
+    for (Filter* filter : pipeline_) {
+        delete filter;
+    }
+}

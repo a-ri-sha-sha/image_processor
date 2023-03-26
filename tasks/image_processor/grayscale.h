@@ -9,5 +9,6 @@
 class Grayscale : public Filter {
 public:
     bool Apply(Bitmap* bitmap) override;
+    ~Grayscale() override{};
 };
 #endif  // CPP_HSE_GRAYSCALE_H
