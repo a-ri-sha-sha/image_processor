@@ -176,27 +176,24 @@ Bitmap::RGBDouble::operator RGB() const {
     unsigned char new_r = 0;
     if (b < D0) {
         new_b = UC0;
+    } else if (b > D255) {
+        new_b = UC255;
     } else {
         new_b = static_cast<unsigned char>(b);
     }
-    if (b > D255) {
-        new_b = UC255;
-    }
     if (g < D0) {
         new_g = UC0;
+    } else if (g > D255) {
+        new_g = UC255;
     } else {
         new_g = static_cast<unsigned char>(g);
     }
-    if (g > D255) {
-        new_g = UC255;
-    }
     if (r < D0) {
         new_r = UC0;
+    } else if (r > D255) {
+        new_r = UC255;
     } else {
         new_r = static_cast<unsigned char>(r);
-    }
-    if (r > D255) {
-        new_r = UC255;
     }
     return {new_b, new_g, new_r};
 }
