@@ -7,6 +7,7 @@
 #include "grayscale.h"
 #include "sharpening.h"
 #include "edge_detection.h"
+#include "mirror.h"
 Filter* Creators::CreateCropFilter(const FilterDescription& fd) {
     if (fd.params_.size() > 2) {
         throw ParamsError("Too many parameters!");
@@ -33,4 +34,7 @@ Filter* Creators::CreateEdgeDetectionFilter(const FilterDescription& fd) {
         throw ParamsError("Not enough parameters!");
     }
     return new EdgeDetection(atof(fd.params_[0]));
+}
+Filter* Creators::CreateMirrorFilter(const FilterDescription& fd) {
+    return new Mirror;
 }

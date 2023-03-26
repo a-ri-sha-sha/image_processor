@@ -15,8 +15,16 @@ public:
     bool flag;
     Parser(int argc, char** argv) {
         if (argc == 1) {
-            std::cerr << "Not enough parameters!";
+            std::cerr << "Not enough parameters!" << std::endl;
+            std::cerr << "Try to use: " << std::endl;
+            std::cerr << "-crop v1 v2 \t v1 - int, width; v2 - int, height \t for cutting your picture" << std::endl;
+            std::cerr << "-neg \t for application negative filter" << std::endl;
+            std::cerr << "-gs \t for application grayscale filter" << std::endl;
+            std::cerr << "-sharp \t for application sharpening filter" << std::endl;
+            std::cerr << "-edge v1 \t v1 - double, sensitivity \t for application edge detection filter" << std::endl;
+            std::cerr << "-mirror \t for application mirror filter" << std::endl;
             flag = false;
+            return;
         }
         name_program_ = argv[0];
         input_ = argv[1];

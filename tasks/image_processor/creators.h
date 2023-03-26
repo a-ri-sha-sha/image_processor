@@ -27,6 +27,7 @@ public:
     static Filter* CreatGrayscaleFilter(const FilterDescription& fd);
     //    static Filter* CreateGaussianBlurFilter(const FilterDescription& fd);
     static Filter* CreateEdgeDetectionFilter(const FilterDescription& fd);
+    static Filter* CreateMirrorFilter(const FilterDescription& fd);
 };
 
 #endif  // CPP_HSE_CREATORS_H
