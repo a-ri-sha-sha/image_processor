@@ -22,7 +22,9 @@ Filter* Application::GetFilter(const FilterDescription& fd) {
     return produser_.at(fd.name_)(fd);
 }
 void Application::Run() {
-    Bitmap bitmap(par_.GetInput());
-    pipeline_.Apply(bitmap);
-    bitmap.Output(par_.GetOutput());
+    if (par_.flag) {
+        Bitmap bitmap(par_.GetInput());
+        pipeline_.Apply(bitmap);
+        bitmap.Output(par_.GetOutput());
+    }
 }

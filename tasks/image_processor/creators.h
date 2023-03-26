@@ -7,7 +7,18 @@
 
 #include "filter_description.h"
 #include "filter.h"
+#include <exception>
+class ParamsError : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return message_.c_str();
+    }
+    explicit ParamsError(const std::string& message) : message_{message} {
+    }
 
+protected:
+    std::string message_;
+};
 class Creators {
 public:
     static Filter* CreateCropFilter(const FilterDescription& fd);

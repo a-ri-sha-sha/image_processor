@@ -8,6 +8,18 @@
 #include "tmatrix.h"
 #include <cstdint>
 #include <string>
+#include <exception>
+class BitmapException : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return message_.c_str();
+    }
+    explicit BitmapException(const std::string& message) : message_{message} {
+    }
+
+protected:
+    std::string message_;
+};
 
 class Bitmap {
 public:
@@ -16,6 +28,7 @@ public:
     constexpr static const double D255 = 255.0;
     constexpr static const double D0 = 0.0;
     static const size_t SIZE_HEADER = 54;
+    const size_t BIT_COUNT = 24;
     struct __attribute__((packed)) BmpHeader {
         char signature[2];
         uint32_t file_size;
@@ -65,7 +78,12 @@ public:
     };
 
 public:
-    explicit Bitmap(const std::string& filename);  /// TODO:еще один конструктор
+    void ReadHeader(std::ifstream& file);
+    void ReadInfo(std::ifstream& file);
+    void ReadPixels(std::ifstream& file);
+
+public:
+    explicit Bitmap(const std::string& filename);
     Bitmap(const Bitmap& bitmap);
     void Output(const std::string& filename);
     TMatrix<Bitmap::RGB>& GetPixels();

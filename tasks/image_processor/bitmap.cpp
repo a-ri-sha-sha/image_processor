@@ -8,37 +8,34 @@
 #include <memory>
 #include "bitmap.h"
 
-Bitmap::Bitmap(const std::string& filename) {
-    std::ifstream file(filename, std::ios::binary);
-    if (!file.is_open()) {  // TODO: сделать проверку заранее
-        std::cout << "Could not open file: " << filename << std::endl;
-        return;
+void Bitmap::ReadHeader(std::ifstream& file) {
+    if (!file.is_open()) {
+        throw BitmapException("Could not open file");
     }
     file.read(reinterpret_cast<char*>(&header_), sizeof(header_));
+    if (header_.signature[0] != 'B' || header_.signature[1] != 'M') {
+        throw BitmapException("Not a BMP file");
+    }
+}
+
+void Bitmap::ReadInfo(std::ifstream& file) {
     file.read(reinterpret_cast<char*>(&info_), sizeof(info_));
-    //    if (header_.signature[0] != 'B' || header_.signature[1] != 'M') {
-    //        std::cerr << "Not a BMP file: " << filename << std::endl;
-    //        return;
-    //    }
-    //    if (info_.info_size != sizeof(BmpInfo)) {
-    //        std::cerr << "Invalid BMP format: " << filename << std::endl;
-    //        return;
-    //    }
-    //    if (info_.bit_count != 24) {
-    //        std::cerr << "Only 24-bit BMPs are supported: " << filename << std::endl;
-    //        return;
-    //    }
-    //    if (info_.compression != 0) {
-    //        std::cerr << "Compressed BMPs are not supported: " << filename << std::endl;
-    //        return;
-    //    }
-    //    if (info_.colors_used != 0 || info_.colors_important != 0) {
-    //        std::cerr << "BMPs with color tables are not supported: " << filename << std::endl;
-    //        return;
-    //    }
-    int32_t width = info_.width;
-    int32_t height = info_.height;
-    pixels_.Resize(width, height);
+    if (info_.info_size != sizeof(BmpInfo)) {
+        throw BitmapException("Invalid BMP format");
+    }
+    if (info_.bit_count != BIT_COUNT) {
+        throw BitmapException("Only 24-bit BMPs are supported");
+    }
+    if (info_.compression != 0) {
+        throw BitmapException("Compressed BMPs are not supported");
+    }
+    if (info_.colors_used != 0 || info_.colors_important != 0) {
+        throw BitmapException("BMPs with color tables are not supported");
+    }
+}
+
+void Bitmap::ReadPixels(std::ifstream& file) {
+    pixels_.Resize(info_.width, info_.height);
     for (int32_t y = info_.height - 1; y >= 0; --y) {
         for (int32_t x = 0; x < info_.width; ++x) {
             uint8_t b = 0;
@@ -49,14 +46,17 @@ Bitmap::Bitmap(const std::string& filename) {
             file.read(reinterpret_cast<char*>(&r), sizeof(r));
             pixels_(y, x) = RGB{b, g, r};
         }
-
-        // заглушка для выравнивания строк по границе 4-х байт
-        uint8_t padding = 0;  // seekg(кол-во байт смещения, смещение)
-        // skip padding
+        uint8_t padding = 0;
         for (int32_t i = 0; i < (4 - ((info_.width * sizeof(RGB)) % 4)) % 4; i++) {
             file.read(reinterpret_cast<char*>(&padding), sizeof(padding));
         }
     }
+}
+Bitmap::Bitmap(const std::string& filename) {
+    std::ifstream file(filename, std::ios::binary);
+    ReadHeader(file);
+    ReadInfo(file);
+    ReadPixels(file);
     file.close();
 }
 void Bitmap::Output(const std::string& filename) {
@@ -92,7 +92,7 @@ void Bitmap::Resize(uint32_t height, uint32_t width) {
     pixels_.Resize(width, height);
     info_.width = static_cast<int32_t>(width);
     info_.height = static_cast<int32_t>(height);
-    header_.file_size = SIZE_HEADER + width * height * 3;  // TODO: magic number
+    header_.file_size = SIZE_HEADER + width * height * 3;
 }
 uint32_t Bitmap::GetHeight() const {
     return info_.height;
@@ -105,6 +105,7 @@ Bitmap::Bitmap(const Bitmap& bitmap) {
     pixels_ = bitmap.pixels_;
     header_ = bitmap.header_;
 }
+
 Bitmap::RGBDouble::RGBDouble(const Bitmap::RGB& rgb) {
     b = static_cast<double>(rgb.b);
     g = static_cast<double>(rgb.g);

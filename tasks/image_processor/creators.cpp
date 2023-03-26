@@ -8,6 +8,12 @@
 #include "sharpening.h"
 #include "edge_detection.h"
 Filter* Creators::CreateCropFilter(const FilterDescription& fd) {
+    if (fd.params_.size() > 2) {
+        throw ParamsError("Too many parameters!");
+    }
+    if (fd.params_.size() < 2) {
+        throw ParamsError("Not enough parameters!");
+    }
     return new Crop(atoi(fd.params_[0]), atoi(fd.params_[1]));
 }
 Filter* Creators::CreateNegativeFilter(const FilterDescription& fd) {
@@ -20,5 +26,11 @@ Filter* Creators::CreateSharpingFilter(const FilterDescription& fd) {
     return new Sharpening();
 }
 Filter* Creators::CreateEdgeDetectionFilter(const FilterDescription& fd) {
+    if (fd.params_.size() > 1) {
+        throw ParamsError("Too many parameters!");
+    }
+    if (fd.params_.empty()) {
+        throw ParamsError("Not enough parameters!");
+    }
     return new EdgeDetection(atof(fd.params_[0]));
 }

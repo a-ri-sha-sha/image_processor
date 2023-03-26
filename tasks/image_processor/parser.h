@@ -6,14 +6,22 @@
 #define CPP_HSE_PARSER_H
 
 #include "filter_description.h"
+#include "creators.h"
 #include <string>
+#include <iostream>
 
 class Parser {
 public:
+    bool flag;
     Parser(int argc, char** argv) {
+        if (argc == 1) {
+            std::cerr << "Not enough parameters!";
+            flag = false;
+        }
         name_program_ = argv[0];
         input_ = argv[1];
         output_ = argv[2];
+        flag = true;
         char* name = nullptr;
         std::vector<char*> params;
         for (int i = 3; i < argc; ++i) {
