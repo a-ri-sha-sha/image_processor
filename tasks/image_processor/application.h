@@ -7,10 +7,12 @@
 #include <map>
 #include "parser.h"
 #include "filter.h"
+#include "pipeline.h"
 class Application {
 public:
     Application(int argc, char** argv);
     Filter* GetFilter(const FilterDescription& fd);
+    void Run();
 
 protected:
     Parser par_;
@@ -18,5 +20,6 @@ protected:
     std::map<std::string_view, PtrToFd> produser_;
     int argc_;
     char** argv_;
+    Pipeline pipeline_;
 };
 #endif  // CPP_HSE_APPLICATION_H

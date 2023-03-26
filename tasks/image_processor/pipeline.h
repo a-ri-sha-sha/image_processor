@@ -14,7 +14,6 @@ public:
     void Apply(Bitmap& bmp);
     void AddFilter(Filter* filter);
     ~Pipeline();
-    ;
 
 protected:
     std::vector<Filter*> pipeline_;
