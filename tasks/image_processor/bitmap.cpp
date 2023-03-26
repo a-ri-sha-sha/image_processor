@@ -90,9 +90,9 @@ TMatrix<Bitmap::RGB>& Bitmap::GetPixels() {
 }
 void Bitmap::Resize(uint32_t height, uint32_t width) {
     pixels_.Resize(height, width);
-    info_.width = width;
-    info_.height = height;
-    header_.file_size = size_header + width * height * 3;  // TODO: magic number
+    info_.width = static_cast<int32_t>(width);
+    info_.height = static_cast<int32_t>(height);
+    header_.file_size = SIZE_HEADER + width * height * 3;  // TODO: magic number
 }
 uint32_t Bitmap::GetHeight() const {
     return info_.height;

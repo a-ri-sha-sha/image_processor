@@ -15,7 +15,7 @@ public:
     static const unsigned char UC0 = 0;
     constexpr static const double D255 = 255.0;
     constexpr static const double D0 = 0.0;
-    static const size_t size_header = 54;
+    static const size_t SIZE_HEADER = 54;
     struct __attribute__((packed)) BmpHeader {
         char signature[2];
         uint32_t file_size;
