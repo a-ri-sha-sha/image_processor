@@ -7,4 +7,5 @@ int main(int argc, char** argv) {
     //        e.what();
     //    } catch (...);
     Application app(argc, argv);
+    app.Run();
 }
