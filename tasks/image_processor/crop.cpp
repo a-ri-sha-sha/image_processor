@@ -7,7 +7,7 @@ bool Crop::Apply(Bitmap* bitmap) {
     bitmap->Resize(height_, width_);
     return true;
 }
-Crop::Crop(uint32_t height, uint32_t width) {
+Crop::Crop(uint32_t width, uint32_t height) {
     height_ = height;
     width_ = width;
 }

@@ -89,7 +89,7 @@ TMatrix<Bitmap::RGB>& Bitmap::GetPixels() {
     return pixels_;
 }
 void Bitmap::Resize(uint32_t height, uint32_t width) {
-    pixels_.Resize(height, width);
+    pixels_.Resize(width, height);
     info_.width = static_cast<int32_t>(width);
     info_.height = static_cast<int32_t>(height);
     header_.file_size = SIZE_HEADER + width * height * 3;  // TODO: magic number
