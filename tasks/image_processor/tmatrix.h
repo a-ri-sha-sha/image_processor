@@ -13,10 +13,10 @@ template <typename T>
 class TMatrix {
 public:
     // ожидаемые (стандартные) для типов данных производнных от T
-    using value_type = T;
-    using pointer = T*;
-    using const_pointer = const T*;
-    using reference = value_type&;
+    using ValueType = T;
+    using Pointer = T*;
+    using ConstPointer = const T*;
+    using Reference = ValueType&;
 
     class Row {
         friend class TMatrix<T>;
@@ -122,7 +122,7 @@ public:
 
     // Конструктор создаёт матрицу размера m x n и задаёт значение элементов по умолчанию
     // Если один из параметров не равен 0, то другой тоже. Иначе кидаем исключительную ситуацию
-    TMatrix(size_t rows_num = 0, size_t cols_num = 0, T def = T{}) {
+    explicit TMatrix(size_t rows_num = 0, size_t cols_num = 0, T def = T{}) {
         if (rows_num == 0 && cols_num == 0) {
             rows_num_ = 0;
             cols_num_ = 0;
@@ -176,7 +176,7 @@ public:
         throw std::out_of_range("IOJ (matrix).");
     }
 
-    reference At(size_t i, size_t j) {
+    Reference At(size_t i, size_t j) {
         if (i < rows_num_ && j < cols_num_) {
             return this->operator()(i, j);
         }
@@ -184,29 +184,29 @@ public:
     }
 
 public:
-    void Resize(size_t newColNum, size_t newRowNum, T def = T{}) {
-        if (newColNum == 0 && newRowNum == 0) {
+    void Resize(size_t new_col_num, size_t new_row_num, T def = T{}) {
+        if (new_col_num == 0 && new_row_num == 0) {
             Clear();
             return;
         }
-        if (newRowNum == 0 || newColNum == 0) {
+        if (new_row_num == 0 || new_col_num == 0) {
             throw std::invalid_argument("Can't make matrix with 0 rows or columns");
         }
 
-        T* new_table = AllocateMatrix(newRowNum, newColNum);
-        for (size_t i = 0; i < newRowNum; ++i) {
-            for (size_t j = 0; j < newColNum; ++j) {
+        T* new_table = AllocateMatrix(new_row_num, new_col_num);
+        for (size_t i = 0; i < new_row_num; ++i) {
+            for (size_t j = 0; j < new_col_num; ++j) {
                 if (i < rows_num_ && j < cols_num_) {
-                    GetIJEl(new_table, i, j, newColNum) = GetIJEl(table_, i, j, cols_num_);
+                    GetIJEl(new_table, i, j, new_col_num) = GetIJEl(table_, i, j, cols_num_);
                 } else {
-                    GetIJEl(new_table, i, j, newColNum) = def;
+                    GetIJEl(new_table, i, j, new_col_num) = def;
                 }
             }
         }
         delete[] table_;
         table_ = new_table;
-        rows_num_ = newRowNum;
-        cols_num_ = newColNum;
+        rows_num_ = new_row_num;
+        cols_num_ = new_col_num;
     }
 
     void Clear() {
@@ -242,7 +242,7 @@ public:
     const T* GetPtr() const {
         return table_;
     }
-    static reference GetIJEl(T* arr, size_t i, size_t j, size_t cols_num) {
+    static Reference GetIJEl(T* arr, size_t i, size_t j, size_t cols_num) {
         return arr[i * cols_num + j];
     }
 
@@ -255,7 +255,7 @@ protected:
     }
 
 protected:
-    pointer table_;  // читается тяжелее чем T*, но так написано в стандарте
+    Pointer table_;  // читается тяжелее чем T*, но так написано в стандарте
     size_t rows_num_;
     size_t cols_num_;
 };

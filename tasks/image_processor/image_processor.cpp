@@ -1,3 +1,10 @@
+#include "application.h"
 int main(int argc, char** argv) {
-    return 0;
+    //    try{
+    //        Application app(argc, argv);
+    //        app.Run();
+    //    } catch (std::exseption){
+    //        e.what();
+    //    } catch (...);
+    Application app(argc, argv);
 }
