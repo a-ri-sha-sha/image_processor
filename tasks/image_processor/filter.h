@@ -10,7 +10,7 @@
 class Filter {
 public:
     virtual bool Apply(Bitmap*) = 0;
-    virtual ~Filter();
+    virtual ~Filter(){};
 };
 
 #endif  // CPP_HSE_FILTER_H
